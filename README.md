@@ -4,9 +4,9 @@ A futuristic, immersive 3D web application built with React + Three.js featuring
 
 ## 🚀 Live Demo
 
-[![Vercel](https://img.shields.io/badge/Live%20Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://your-project-name.vercel.app)
+[![Vercel](https://img.shields.io/badge/Live%20Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://dinos-proj.vercel.app/)
 
-> **Replace the link above** with your actual Vercel deployment URL after deploying.
+> 🔗 **[https://dinos-proj.vercel.app/](https://dinos-proj.vercel.app/)**
 
 ---
 
