@@ -1,0 +1,154 @@
+/* --- 3D PARTICLE BUTTON WRAPPER --- */
+.particle-button-container {
+  position: relative;
+  width: 250px;
+  height: 80px;
+  margin-top: 25px;
+  align-self: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* Unlock depth axis */
+  perspective: 600px;
+  transform-style: preserve-3d;
+}
+
+.particles-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  z-index: 10; /* Lock particles rigidly in-front of background three JS pipeline */
+}
+
+
+
+/* --- ORBIT SYSTEM HIERARCHY --- */
+/* The base acts as the central anchor inside the 3D sphere */
+.particle-base {
+  position: absolute;
+  transform-style: preserve-3d;
+  /* Idle state 3D coordinate */
+  transform: translate3d(var(--tx-idle), var(--ty-idle), var(--tz-idle));
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* The spinner runs infinitely independently of css transitions */
+.particle-spin {
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: var(--spin-anim) var(--orbit-duration) linear infinite;
+}
+
+@keyframes spinRight {
+  0% { transform: rotateZ(0deg); }
+  100% { transform: rotateZ(360deg); }
+}
+
+@keyframes spinLeft {
+  0% { transform: rotateZ(360deg); }
+  100% { transform: rotateZ(0deg); }
+}
+
+/* The visual element is offset on the X axis, forming a circular orbit as the parent spins */
+.particle-visual {
+  position: absolute;
+  /* Replace "square look" with rounded circles */
+  width: 4px;
+  height: 4px;
+  margin-left: -2px; /* Center mathematically */
+  margin-top: -2px;
+  border-radius: 50%;
+  background-color: var(--p-color);
+  box-shadow: var(--p-shadow);
+  
+  /* Pushed out to orbit radius, scaled for depth illusion */
+  transform: translateX(var(--orbit-r-idle)) scale(var(--scale-idle));
+  opacity: var(--op-idle);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s, background-color 1.2s;
+}
+
+/* --- STATE 2: HOVER (GATHER) --- */
+/* Pull bases toward the center structurally */
+.particle-button-container.hover .particle-base {
+  transform: translate3d(var(--tx-hover), var(--ty-hover), var(--tz-hover));
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+
+/* Tighten orbital radii, burn brighter */
+.particle-button-container.hover .particle-visual {
+  transform: translateX(var(--orbit-r-hover)) scale(var(--scale-hover));
+  opacity: var(--op-hover);
+  background-color: #ffffff;
+  box-shadow: 0 0 15px #ffffff, 0 0 30px #00ffff;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s, background-color 0.6s;
+}
+
+/* --- STATE 3: CLICK -> COLLAPSE --- */
+/* Form a perfect dense singularity */
+.particle-button-container.collapsing .particle-base {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.15s cubic-bezier(0.5, 0, 1, 0.5);
+}
+
+
+
+.particle-button-container.collapsing .particle-visual {
+  transform: translateX(0) scale(0.2);
+  opacity: 1;
+  background-color: #ffffff;
+  box-shadow: 0 0 30px #ffffff, 0 0 70px #00ffff;
+  transition: transform 0.15s, opacity 0.15s, background-color 0.15s;
+}
+
+/* --- STATE 4: CLICK -> EXPLODE --- */
+/* Fly outward wildly */
+.particle-button-container.exploding .particle-base {
+  transform: translate3d(var(--tx-explode), var(--ty-explode), var(--tz-explode));
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+
+
+.particle-button-container.exploding .particle-visual {
+  transform: translateX(0) scale(3);
+  opacity: 0;
+  box-shadow: 0 0 25px #00ffff;
+  background-color: #aaffff;
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1.2s ease-out;
+}
+
+/* --- TEXT LABEL --- */
+.particle-text {
+  position: absolute;
+  color: #ffffff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 5px;
+  text-shadow: 0 0 6px #00ffff;
+  pointer-events: none;
+  opacity: 0.3;
+  /* Push text forward in 3D perspective to avoid particles clipping through it */
+  transform: translateZ(60px) scale(0.9);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out, text-shadow 0.5s ease-out;
+}
+
+.particle-button-container.hover .particle-text {
+  opacity: 1;
+  transform: translateZ(60px) scale(1);
+  text-shadow: 0 0 12px #00ffff, 0 0 30px #00ffff;
+}
+
+.particle-button-container.collapsing .particle-text {
+  opacity: 0;
+  transform: translateZ(60px) scale(0.5);
+  transition: opacity 0.1s, transform 0.1s;
+}
+
+.particle-button-container.exploding .particle-text {
+  opacity: 0;
+}

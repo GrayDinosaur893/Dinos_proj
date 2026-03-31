@@ -1,0 +1,226 @@
+.login-3d-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* --- THE 3D FLIP MECHANICS --- */
+.flip-card {
+  background-color: transparent;
+  width: 420px;
+  height: 560px;
+  /* Unlock depth on the local Z axis so it actually looks 3-dimensional mid-air */
+  perspective: 1500px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy futuristic curve */
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(-180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  
+  /* Glassmorphism / Futuristic setup */
+  background: rgba(0, 15, 25, 0.6);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.1), inset 0 0 20px rgba(0, 255, 255, 0.1);
+  border-radius: 12px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 45px 40px;
+  box-sizing: border-box;
+}
+
+/* Initialize the back layout completely flipped so it's hidden */
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* --- INSIDE THE CARD STYLING --- */
+.card-header h2 {
+  color: #00ffff;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 5px;
+  margin: 0 0 10px 0;
+  text-shadow: 0 0 12px rgba(0, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+.header-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ffff, transparent);
+  margin-bottom: 25px;
+  box-shadow: 0 0 8px #00ffff;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+/* Form Input Logic */
+.input-group {
+  position: relative;
+  width: 100%;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 12px;
+  background: rgba(0, 255, 255, 0.02);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+  box-sizing: border-box;
+}
+
+.input-group input:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+  background: rgba(0, 255, 255, 0.08);
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.3);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  pointer-events: none;
+  transition: 0.3s ease-out;
+}
+
+/* Float label automatically via CSS natively */
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+  top: -12px;
+  left: 10px;
+  font-size: 0.75rem;
+  color: #00ffff;
+  background: #000;
+  padding: 0 6px;
+  border-radius: 4px;
+  text-shadow: 0 0 6px rgba(0, 255, 255, 0.8);
+}
+
+.auth-submit-btn {
+  margin-top: 15px;
+  padding: 16px;
+  background: transparent;
+  border: 1px solid #00ffff;
+  color: #00ffff;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.auth-submit-btn:hover {
+  background: rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  text-shadow: 0 0 8px #fff;
+  transform: translateY(-2px);
+}
+
+.auth-submit-btn:active {
+  transform: translateY(1px);
+}
+
+.card-footer {
+  margin-top: 25px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.text-link {
+  background: none;
+  border: none;
+  color: #00ffff;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 8px;
+  padding: 0;
+  text-decoration: underline;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.text-link:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #00ffff;
+}
+
+/* Message styling */
+.message {
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  text-align: center;
+  animation: slideIn 0.3s ease-out;
+  letter-spacing: 1px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message.success {
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  color: #00ff88;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.message.error {
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid rgba(255, 68, 68, 0.4);
+  color: #ff4444;
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+}

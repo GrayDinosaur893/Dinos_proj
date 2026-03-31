@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "title": "Phase 1: Equation to 2D Visualization",
+    "description": "Build a system that takes mathematical equations and renders them as 2D graphs. This foundational phase focuses on parsing input equations, generating coordinate points, and rendering the visual output.",
+    "tasks": [
+      "Parse input equation",
+      "Generate coordinate points",
+      "Render 2D graph"
+    ],
+    "completed": false
+  },
+  {
+    "id": 2,
+    "title": "Phase 2: 3D Surface Generation",
+    "description": "Extend the system to generate 3D surfaces from equations. This phase adds depth and complexity by introducing z-axis support and mesh generation.",
+    "tasks": [
+      "Add z-axis support",
+      "Create mesh grid",
+      "Render 3D surface"
+    ],
+    "completed": false
+  },
+  {
+    "id": 3,
+    "title": "Phase 3: Real-World Output",
+    "description": "Convert 3D models into real-world output formats. This final phase enables exporting models for 3D printing and other physical applications.",
+    "tasks": [
+      "Export to STL format",
+      "Optimize for 3D printing",
+      "Generate support structures"
+    ],
+    "completed": false
+  }
+]

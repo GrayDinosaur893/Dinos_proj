@@ -1,0 +1,14 @@
+.sphere-3d-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  margin-top: -110px; /* Center mathematically */
+  margin-left: -110px;
+  pointer-events: none; /* Ignore all interactions */
+  z-index: 0;           /* Rest entirely behind the particles */
+  
+  /* Prevent canvas highlights or interaction interference */
+  user-select: none;
+}

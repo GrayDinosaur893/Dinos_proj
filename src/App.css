@@ -1,0 +1,429 @@
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 120px;
+  margin: 0;
+  padding: 0 50px;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace;
+  position: relative;
+  z-index: 1; /* Ensure UI stays above background layers */
+}
+
+.left-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-section {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.system-label {
+  color: #00ffff;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.main-heading {
+  color: #ffffff;
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 0;
+  letter-spacing: -1.5px;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.description-paragraph {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #88aadd;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 300;
+}
+
+.button-energy-field {
+  position: relative;
+  display: inline-flex;
+  margin-top: 25px;
+  align-self: flex-start;
+  border-radius: 4px; /* match the start-button */
+}
+
+.button-energy-field::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.2), inset 0 0 8px rgba(0, 255, 255, 0.1);
+  animation: fieldPulse 2s infinite ease-in-out;
+  pointer-events: none;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+@keyframes fieldPulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.15); opacity: 0.1; box-shadow: 0 0 25px rgba(0, 255, 255, 0.5); border-color: rgba(0, 255, 255, 0.8); }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+
+@keyframes fieldPulseHover {
+  0% { transform: scale(1.05); opacity: 0.9; }
+  50% { transform: scale(1.25); opacity: 0.3; box-shadow: 0 0 40px rgba(0, 255, 255, 0.9); border-color: rgba(0, 255, 255, 1); }
+  100% { transform: scale(1.05); opacity: 0.9; }
+}
+
+.button-energy-field:hover::before {
+  animation: fieldPulseHover 1s infinite ease-in-out;
+  border: 1px solid rgba(0, 255, 255, 0.8);
+}
+
+.start-button {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  padding: 12px 30px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.button-energy-field:hover .start-button {
+  transform: scale(1.05) translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0, 255, 255, 0.6), inset 0 0 15px rgba(0, 255, 255, 0.4);
+  background: rgba(0, 255, 255, 0.15);
+}
+
+.button-energy-field.clicking .start-button {
+  transform: scale(0.9) translateY(0);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.9), inset 0 0 10px rgba(0, 255, 255, 0.5);
+  background: rgba(0, 255, 255, 0.3);
+  transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.button-energy-field.clicking::before {
+  animation: none;
+  transform: scale(0.85);
+  border: 1px solid rgba(0, 255, 255, 1);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 1), inset 0 0 15px rgba(0, 255, 255, 0.8);
+  opacity: 1;
+  transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ======================================== */
+/* 3D PAGE TRANSITION ANIMATIONS            */
+/* ======================================== */
+
+/* Container for page transitions */
+.page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  transform-origin: center;
+}
+
+/* Collapse animation - current page shrinking into center */
+.page-collapse {
+  animation: collapseIntoCenter 0.5s ease-in forwards;
+}
+
+@keyframes collapseIntoCenter {
+  0% {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.3) translateZ(-200px);
+    opacity: 0;
+  }
+}
+
+/* Emerge animation - new page emerging from center */
+.page-emerge {
+  animation: emergeFromCenter 0.5s ease-out forwards;
+}
+
+@keyframes emergeFromCenter {
+  0% {
+    transform: scale(0.3) translateZ(200px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+  }
+}
+
+/* Transition wrapper */
+.transition-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ======================================== */
+/* POST-LOGIN COLLAPSE ANIMATION            */
+/* ======================================== */
+
+.collapse {
+  animation: collapseToCenter 0.6s ease forwards;
+}
+
+@keyframes collapseToCenter {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+
+/* ======================================== */
+/* TRANSITION ORB (Video Circle)            */
+/* ======================================== */
+
+.transition-orb {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 999;
+  
+  /* No background - fully transparent */
+  background: transparent;
+  
+  /* Soft edge fade - removes hard circle edge */
+  mask-image: radial-gradient(circle, white 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle, white 60%, transparent 100%);
+  
+  /* Natural glow blending */
+  box-shadow:
+    0 0 30px rgba(255, 0, 200, 0.6),
+    0 0 80px rgba(255, 0, 200, 0.3);
+  
+  /* Slight scale pulse for life effect */
+  animation: orbPulse 3s infinite ease-in-out;
+}
+
+.transition-orb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  
+  /* Blend video with background */
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+@keyframes orbPulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.03); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ======================================== */
+/* DASHBOARD STYLES                         */
+/* ======================================== */
+
+.dashboard {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 100px;
+  position: relative;
+  background-image: url('./images/download.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.dashboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.dashboard h2 {
+  position: relative;
+  z-index: 50;
+  pointer-events: auto;
+}
+
+.dashboard .back-btn {
+  position: absolute;
+  z-index: 50;
+  pointer-events: auto;
+}
+
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  z-index: 50;
+  background: rgba(0, 15, 25, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  color: #00ffff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  border-color: rgba(0, 255, 255, 0.8);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.dashboard h2 {
+  position: relative;
+  z-index: 1;
+  color: #00ffff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3rem;
+  letter-spacing: 5px;
+  margin-bottom: 50px;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+.dashboard .sections {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 60px;
+}
+
+/* ======================================== */
+/* 3D ROTATING CUBE BUTTON                  */
+/* ======================================== */
+
+.cube-button {
+  width: 120px;
+  height: 120px;
+  perspective: 600px;
+  cursor: pointer;
+}
+
+.cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: cubeRotate 6s infinite ease-in-out;
+}
+
+.cube-button:hover .cube {
+  animation-play-state: paused;
+  transform: rotateX(-20deg) rotateY(45deg) scale(1.1);
+}
+
+.face {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #00ffff;
+  background: rgba(0, 15, 25, 0.7);
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1), 0 0 15px rgba(0, 255, 255, 0.1);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+.face.front  { transform: translateZ(60px); }
+.face.back   { transform: rotateY(180deg) translateZ(60px); }
+.face.right  { transform: rotateY(90deg) translateZ(60px); }
+.face.left   { transform: rotateY(-90deg) translateZ(60px); }
+.face.top    { transform: rotateX(90deg) translateZ(60px); }
+.face.bottom { transform: rotateX(-90deg) translateZ(60px); }
+
+@keyframes cubeRotate {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+.cube-button:hover .face {
+  border-color: rgba(0, 255, 255, 0.8);
+  box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.2), 0 0 25px rgba(0, 255, 255, 0.3);
+}
+
+/* ======================================== */
+/* EXPLORE PAGE STYLES                      */
+/* ======================================== */
+
+.explore-page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.explore-page h2 {
+  color: #00ffff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3rem;
+  letter-spacing: 5px;
+  margin-bottom: 50px;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+.explore-grid {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
